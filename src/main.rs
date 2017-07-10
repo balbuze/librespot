@@ -86,7 +86,6 @@ struct Setup {
 fn setup(args: &[String]) -> Setup {
     let mut opts = getopts::Options::new();
     opts.optopt("c", "cache", "Path to a directory where files will be cached.", "CACHE")
-        .optflag("", "disable-audio-cache", "Disable caching of the audio data.")
         .reqopt("n", "name", "Device name", "NAME")
         .optopt("b", "bitrate", "Bitrate (96, 160 or 320). Defaults to 160", "BITRATE")
         .optopt("", "onstart", "Run PROGRAM when playback is about to begin.", "PROGRAM")
@@ -134,10 +133,9 @@ fn setup(args: &[String]) -> Setup {
 
     let name = matches.opt_str("name").unwrap();
     let device_id = librespot::session::device_id(&name);
-    let use_audio_cache = !matches.opt_present("disable-audio-cache");
 
     let cache = matches.opt_str("c").map(|cache_location| {
-        Cache::new(PathBuf::from(cache_location), use_audio_cache)
+        Cache::new(PathBuf::from(cache_location))
     });
 
     let cached_credentials = cache.as_ref().and_then(Cache::credentials);
