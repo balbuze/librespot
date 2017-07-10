@@ -109,7 +109,7 @@ fn setup(args: &[String]) -> Setup {
     let verbose = matches.opt_present("verbose");
     setup_logging(verbose);
 
-    info!("librespot {} ({}). Built on {}.",
+    info!("librespot {} ({}). Built on {}. Built by Balbuze for Volumio",
              version::short_sha(),
              version::commit_date(),
              version::short_now());
